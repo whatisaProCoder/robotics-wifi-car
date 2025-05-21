@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Panel</title>
+    <style>
+        :root {
+            --primary-color: #ffffff;
+            --primary-color-lighter: #f5f7fa;
+            --primary-color-darker: #e3e6eb;
+            --background-color: #f0f4f8;
+            --accent-color: #6c63ff;
+            --border-color: #e0e6ed;
+            --main-text-color: #232946;
+            --main-text-hover-color: #6c63ff;
+            --accent-text-color: #595959;
+            --white: #ffffff;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary-color: #181a20;
+                --primary-color-lighter: #23262f;
+                --primary-color-darker: #101217;
+                --background-color: #13151a;
+                --accent-color: #8b7cff;
+                --border-color: #23262f;
+                --main-text-color: #f3f6fa;
+                --main-text-hover-color: #8b7cff;
+                --accent-text-color: #b0b3c6;
+            }
+        }
+
+        [data-theme="light"] {
+            --primary-color: #ffffff;
+            --primary-color-lighter: #f5f7fa;
+            --primary-color-darker: #e3e6eb;
+            --background-color: #f0f4f8;
+            --accent-color: #6c63ff;
+            --border-color: #e0e6ed;
+            --main-text-color: #232946;
+            --main-text-hover-color: #6c63ff;
+            --accent-text-color: #595959;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #181a20;
+            --primary-color-lighter: #23262f;
+            --primary-color-darker: #101217;
+            --background-color: #13151a;
+            --accent-color: #8b7cff;
+            --border-color: #23262f;
+            --main-text-color: #f3f6fa;
+            --main-text-hover-color: #8b7cff;
+            --accent-text-color: #b0b3c6;
+        }
+
+        body {
+            background-color: var(--background-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr 0.5fr;
+            justify-items: center;
+            width: 400px;
+            gap: 25px;
+            border: 2px solid var(--border-color);
+            padding: 20px;
+            border-radius: 1.5rem;
+            background-color: var(--primary-color);
+        }
+
+
+        .icon {
+            border: 2px solid var(--border-color);
+            border-radius: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color ease 0.3s, scale ease 0.3s;
+        }
+
+        .icon>svg {
+            fill: currentColor;
+            color: var(--main-text-color);
+            height: 100px;
+        }
+
+        .icon:active {
+            background-color: var(--accent-color);
+            scale: 1.1;
+        }
+
+        .forward {
+            grid-column: 2/3;
+            grid-row: 1/2;
+        }
+
+        .backward {
+            grid-column: 2/3;
+            grid-row: 3/4;
+        }
+
+        .left {
+            grid-column: 1/2;
+            grid-row: 2/3;
+        }
+
+        .right {
+            grid-column: 3/4;
+            grid-row: 2/3;
+        }
+
+        .stop {
+            grid-column: 2/3;
+            grid-row: 2/3;
+        }
+
+        .horn {
+            grid-column: 3/4;
+            grid-row: 3/4;
+            background-color: var(--border-color);
+        }
+
+        .theme-toggle {
+            border-radius: 50%;
+            height: 4rem;
+            width: 4rem;
+            padding: 0.2rem;
+            align-self: center;
+        }
+
+        .theme-toggle>svg {
+            height: 3.5rem;
+            width: 3.5rem;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--accent-color);
+        }
+
+        .speed {
+            grid-column: 1/4;
+            grid-row: 4/5;
+            align-content: center;
+            align-self: center;
+            height: min-content;
+        }
+
+        .speed>input {
+            scale: 2;
+            accent-color: var(--accent-color);
+            border-color: var(--border-color);
+        }
+
+        .title {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: var(--main-text-color);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            background-color: var(--accent-color);
+            border: 2px solid var(--border-color);
+            padding: 1rem 2rem;
+            border-radius: 1.01rem;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="icon forward" onclick="sendCommand('forward')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <title>arrow-up</title>
+                <path d="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z" />
+            </svg>
+        </div>
+        <div class="icon backward" onclick="sendCommand('backward')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <title>arrow-down</title>
+                <path d="M11,4H13V16L18.5,10.5L19.92,11.92L12,19.84L4.08,11.92L5.5,10.5L11,16V4Z" />
+            </svg>
+        </div>
+        <div class="icon left" onclick="sendCommand('left')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <title>arrow-left</title>
+                <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
+            </svg>
+        </div>
+        <div class="icon right" onclick="sendCommand('right')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <title>arrow-right</title>
+                <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
+            </svg>
+        </div>
+        <div class="icon stop" onclick="sendCommand('stop')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <title>stop</title>
+                <path d="M18,18H6V6H18V18Z" />
+            </svg>
+        </div>
+        <div class="icon horn" onclick="sendCommand('horn')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <title>bugle</title>
+                <path
+                    d="M21,6C21,11 12,11 12,11C12,11 6,11 5,11C4,11 3,10 3,10H2V14H3C3,14 4,13 5,13C5.2,13 5.7,13 6.3,13C5.5,13.5 5,14.2 5,15C5,16.8 7.3,18 10.5,18C13.7,18 16,16.8 16,15C16,14.4 15.7,13.8 15.2,13.3C17.8,13.8 21,15 21,18H22V6H21M10.5,16.7C8.2,16.7 6.4,15.9 6.4,15C6.4,14.1 8.2,13.3 10.5,13.3C12.8,13.3 14.6,14.1 14.6,15C14.6,15.9 12.8,16.7 10.5,16.7Z" />
+            </svg>
+        </div>
+        <div class="icon theme-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <title>Theme Toggle</title>
+                <path
+                    d="M7.5,2C5.71,3.15 4.5,5.18 4.5,7.5C4.5,9.82 5.71,11.85 7.53,13C4.46,13 2,10.54 2,7.5A5.5,5.5 0 0,1 7.5,2M19.07,3.5L20.5,4.93L4.93,20.5L3.5,19.07L19.07,3.5M12.89,5.93L11.41,5L9.97,6L10.39,4.3L9,3.24L10.75,3.12L11.33,1.47L12,3.1L13.73,3.13L12.38,4.26L12.89,5.93M9.59,9.54L8.43,8.81L7.31,9.59L7.65,8.27L6.56,7.44L7.92,7.35L8.37,6.06L8.88,7.33L10.24,7.36L9.19,8.23L9.59,9.54M19,13.5A5.5,5.5 0 0,1 13.5,19C12.28,19 11.15,18.6 10.24,17.93L17.93,10.24C18.6,11.15 19,12.28 19,13.5M14.6,20.08L17.37,18.93L17.13,22.28L14.6,20.08M18.93,17.38L20.08,14.61L22.28,17.15L18.93,17.38M20.08,12.42L18.94,9.64L22.28,9.88L20.08,12.42M9.63,18.93L12.4,20.08L9.87,22.27L9.63,18.93Z" />
+            </svg>
+        </div>
+        <div class="speed">
+            <input type="range" min="0" max="255" value="150" id="speed-slider" onchange="updateSpeed(this.value)">
+        </div>
+    </div>
+    <div class="title">
+        WiFi Car - Control Panel
+    </div>
+
+    <script>
+        const toggleButton = document.querySelector('.theme-toggle');
+        const htmlElement = document.documentElement;
+
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            htmlElement.setAttribute('data-theme', savedTheme);
+        } else {
+            htmlElement.setAttribute('data-theme', prefersDarkScheme ? 'dark' : 'light');
+        }
+
+        toggleButton.addEventListener('click', () => {
+            console.log("Toggle Theme Button Clicked!");
+
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        let currentSpeed = 150;
+
+        function updateSpeed(val) {
+            fetch('/speed?val=' + val);
+        }
+
+        function sendCommand(cmd) {
+            const sendString = cmd;
+            console.log(sendString);
+            fetch(sendString);
+        }
+    </script>
+</body>
+
+</html>
