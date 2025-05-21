@@ -93,7 +93,7 @@ void handleRoot() {
             grid-template-columns: 1fr 1fr 1fr;
             grid-template-rows: 1fr 1fr 1fr 0.5fr;
             justify-items: center;
-            width: 400px;
+            width: 350px;
             gap: 25px;
             border: 2px solid var(--border-color);
             padding: 20px;
