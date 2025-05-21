@@ -167,7 +167,7 @@ void handleRoot() {
             width: 3.5rem;
         }
 
-        .theme-toggle:hover {
+        .theme-toggle:active {
             background-color: var(--accent-color);
         }
 
