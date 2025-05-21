@@ -190,6 +190,8 @@ void handleRoot() {
             color: var(--main-text-color);
             font-size: 1.5rem;
             margin-top: 2rem;
+            width: 350px;
+            box-sizing: border-box;
             background-color: var(--primary-color);
             border: 2px solid var(--border-color);
             border-radius: 1.01rem;
