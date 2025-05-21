@@ -11,7 +11,7 @@ const char* password = "1234200A";  // Replace with your hotspot password
 #define ENB 19
 #define IN3 33
 #define IN4 32
-#define BUZZER 36;
+#define BUZZER 36
 
 int speedValue = 150;  // Default motor speed (0-255)
 
@@ -97,6 +97,7 @@ void handleRoot() {
             gap: 25px;
             border: 2px solid var(--border-color);
             padding: 20px;
+            box-sizing: border-box;
             border-radius: 1.5rem;
             background-color: var(--primary-color);
         }
@@ -114,7 +115,7 @@ void handleRoot() {
         .icon>svg {
             fill: currentColor;
             color: var(--main-text-color);
-            height: 100px;
+            height: 5rem;
         }
 
         .icon:active {
@@ -185,15 +186,18 @@ void handleRoot() {
         }
 
         .title {
-            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--main-text-color);
             font-size: 1.5rem;
             margin-top: 2rem;
-            background-color: var(--accent-color);
+            background-color: var(--primary-color);
             border: 2px solid var(--border-color);
-            padding: 1rem 2rem;
             border-radius: 1.01rem;
+            border-bottom-color: var(--accent-color);
+            border-bottom-width: 4px;
+            padding: 1rem 2rem;
             user-select: none;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -303,41 +307,41 @@ void handleSpeed() {
 }
 
 // Motor control logic
-void moveMotor(String direction) {
+void moveMotor(String command) {
   int spd = speedValue;
 
-  Serial.print("Direction : ");
-  Serial.print(direction);
+  Serial.print("Command : ");
+  Serial.println(command);
 
   analogWrite(ENA, spd);
   analogWrite(ENB, spd);
 
-  if (direction == "forward") {
+  if (command == "forward") {
     digitalWrite(IN1, HIGH);
     digitalWrite(IN2, LOW);
     digitalWrite(IN3, HIGH);
     digitalWrite(IN4, LOW);
-  } else if (direction == "backward") {
+  } else if (command == "backward") {
     digitalWrite(IN1, LOW);
     digitalWrite(IN2, HIGH);
     digitalWrite(IN3, LOW);
     digitalWrite(IN4, HIGH);
-  } else if (direction == "left") {
+  } else if (command == "left") {
     digitalWrite(IN1, LOW);
     digitalWrite(IN2, HIGH);
     digitalWrite(IN3, HIGH);
     digitalWrite(IN4, LOW);
-  } else if (direction == "right") {
+  } else if (command == "right") {
     digitalWrite(IN1, HIGH);
     digitalWrite(IN2, LOW);
     digitalWrite(IN3, LOW);
     digitalWrite(IN4, HIGH);
-  } else if (direction == "stop") {
+  } else if (command == "stop") {
     digitalWrite(IN1, LOW);
     digitalWrite(IN2, LOW);
     digitalWrite(IN3, LOW);
     digitalWrite(IN4, LOW);
-  } else if (direction == "horn") {
+  } else if (command == "horn") {
     digitalWrite(BUZZER, HIGH);
     delay(300);
     digitalWrite(BUZZER, LOW);
@@ -354,7 +358,7 @@ void setup() {
   pinMode(IN3, OUTPUT);
   pinMode(IN4, OUTPUT);
 
-  pinMode(BUZZER, OUTPUT)
+  pinMode(BUZZER, OUTPUT);
 
   pinMode(ENA, OUTPUT);
   pinMode(ENB, OUTPUT);
